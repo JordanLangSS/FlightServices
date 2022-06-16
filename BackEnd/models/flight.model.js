@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 // create a flight schema
 const flightSchema = new Schema({
     flightNumber: {
-        Number,
-        unique: true,
+        type: Schema.Types.ObjectId,
+        //unique: true,
         required: [true, 'Must provide a flight number'],
         min: [1, 'Flight number must be greater than 0']
     },
@@ -45,3 +45,6 @@ const flightSchema = new Schema({
     }
 
 });
+
+const Flight = mongoose.model('Flight', flightSchema, 'Flights');
+module.exports = Flight; // require ('Flight.model.js') will return this class
