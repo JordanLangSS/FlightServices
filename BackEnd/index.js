@@ -1,19 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const logger = require('./middleware/logger');
 // use a .env file for the server port in case I want a Dev and client port separate
 require('dotenv').config(); // so I don't need the value from the require
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.get('/flights', (req, res) => {
-    res.send('GET all flights');
-});
+app.use(logger);
 
-app.get('/flights/:id', (req, res) => {
-    res.send(`GET flight with id of ${req.params.id} `);
-});
+// Bind a router object to the url /flights
+// Any HTTP request starting with /flights will come here
+// Forward the request over to the router
+app.use('/flights', require('./routes/flight.route'))
 
+app.all('*', (req, res) => {
+    res.status(404).send('We dont\'t have the resouce you\'re looking for.');
+});
 
 
 mongoose.connect(process.env.MONGO_URI)
@@ -35,4 +38,4 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })
 
-// video 26 @ 4:52
+// video 26 @ 2:01:00
