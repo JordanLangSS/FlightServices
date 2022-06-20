@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const logger = require('./middleware/logger');
 // use a .env file for the server port in case I want a Dev and client port separate
 require('dotenv').config(); // so I don't need the value from the require
+const cors = require('cors'); // cross origin resource sharing
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
+app.use(cors()); // allow other traffic to my site
 app.use(logger);
 
 // Bind a router object to the url /flights
@@ -16,7 +18,7 @@ app.use(logger);
 app.use('/flights', require('./routes/Flight.route'))
 
 app.all('*', (req, res) => {
-    res.status(404).send('We dont\'t have the resouce you\'re looking for.');
+    res.status(404).send('We dont\'t have the resource you\'re looking for.');
 });
 
 
