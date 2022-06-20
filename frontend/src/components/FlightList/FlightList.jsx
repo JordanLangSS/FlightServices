@@ -17,6 +17,8 @@ export const FlightList = () => {
                 // use the mongodb id as the unique key
                 return (
                     <div key={flight._id}>
+                        {/* Destructure out the flight data*/}
+                        <span flight={flight} />
                         <span> {[flight.flightNumber, flight.departureDate]}</span>
                     </div>
                 );
