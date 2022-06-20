@@ -1,6 +1,17 @@
 const router = require('express').Router()
-const { createFlight, findFlightById, findAllFlights } = require('../controllers/flight.controller');
+const { createFlight, findFlightById, findAllFlights } = require('../controllers/Flight.controller');
 
+// Create a new flight 
+router.post('/', async (req, res) => {
+    try {
+        const flightId = await createFlight(req.body);
+        res.status(201).json({ _id: flightId });
+
+    } catch (err) {
+        res.status(err?.status || 500).json(err);
+    }
+
+});
 
 // GET /flights
 router.get('/', async (req, res) => {
@@ -18,9 +29,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', (req, res) => {
-    res.send('POST to create a new flight!');
-});
+
 
 module.exports = router;
 

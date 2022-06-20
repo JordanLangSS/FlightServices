@@ -7,12 +7,13 @@ require('dotenv').config(); // so I don't need the value from the require
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+app.use(express.json());
 app.use(logger);
 
 // Bind a router object to the url /flights
 // Any HTTP request starting with /flights will come here
 // Forward the request over to the router
-app.use('/flights', require('./routes/flight.route'))
+app.use('/flights', require('./routes/Flight.route'))
 
 app.all('*', (req, res) => {
     res.status(404).send('We dont\'t have the resouce you\'re looking for.');
