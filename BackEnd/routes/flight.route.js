@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { createFlight, findFlightById, findAllFlights } = require('../controllers/Flight.controller');
+const { createFlight, findFlightById, findAllFlights, updateFlight, deleteFlight } = require('../controllers/Flight.controller');
 
 // Create a new flight 
 router.post('/', async (req, res) => {
@@ -10,7 +10,6 @@ router.post('/', async (req, res) => {
     } catch (err) {
         res.status(err?.status || 500).json(err);
     }
-
 });
 
 // GET /flights
@@ -19,22 +18,37 @@ router.get('/', async (req, res) => {
     res.json(flights);
 });
 
+// UPDATE /flight
+router.put('/', async (req, res) => {
+    try {
+        const updatedFlight = await updateFlight(req.body);
+        res.status(200).json({ updatedFlight });
+    } catch (err) {
+        res.status(err?.status || 500).json(err);
+    }
+})
+
+// DELETE a specific flight based on the Flight Number
+router.delete('/:flightNumber', async (req, res) => {
+    try {
+        const deletedFlight = await deleteFlight(req.params.flightNumber);
+        res.status(200).json({ deletedFlight });
+    } catch (err) {
+        res.status(err?.status || 400).json(err);
+    }
+});
+
 router.get('/:id', async (req, res) => {
     try {
         const flight = await findFlightById(req.params.id);
         res.json(flight);
     } catch (err) {
         res.status(err?.status || 400).json(err);
-
     }
 });
 
 
-
 module.exports = router;
 
-// How to delete and update a flight video 26 @ 17:20
-// use .put() to update a flight
-// use .delete() to delete a flight
 // possible have an airport router???
 // list out the different airports and what flights they have

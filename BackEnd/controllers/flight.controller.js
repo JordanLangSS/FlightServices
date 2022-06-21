@@ -3,7 +3,7 @@ const Flight = require('../models/Flight.model');
 const createFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currentNumOfPassengers, passengerLimit }) => {
     try {
         if (currentNumOfPassengers > passengerLimit) {
-            throw { message: 'The current numbers of passengers exceeds the passenger limit' };
+            throw { message: 'The current numbers of passengers is greater than the passenger limit' };
         }
         const flight = new Flight({
             flightNumber,
@@ -26,6 +26,52 @@ const createFlight = async ({ flightNumber, departureDate, arrivalDate, departur
     }
 }
 
+const findAllFlights = async () => {
+    const flights = await Flight.find(); // GET all flights
+    return flights;
+
+}
+
+// https://mongoosejs.com/docs/tutorials/findoneandupdate.html
+const updateFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currentNumOfPassengers, passengerLimit }) => {
+    try {
+        const updatedInfo = {
+            flightNumber,
+            departureDate,
+            arrivalDate,
+            departureTime,
+            arrivalTime,
+            departureAirport,
+            arrivalAirport,
+            currentNumOfPassengers,
+            passengerLimit
+        };
+        const updatedFlightInfo = await Flight.findOneAndUpdate({ flightNumber }, updatedInfo, { new: true });
+        // It will work without the return because the new:true returns it
+        // However, the return lets it appear in the body for debugging
+        return updatedFlightInfo;
+    } catch (err) {
+        console.error(err);
+        throw { status: 400, message: err };
+    }
+}
+
+const deleteFlight = async flightNumber => {
+    try {
+        const flight = await Flight.deleteOne({ flightNumber })
+        // If the flight number we are trying to delete does not exist, throw an error
+        if (flight == null) {
+            throw `No flight with the flight number ${flightNumber} found.`;
+        }
+        return flight
+
+    } catch (err) {
+        throw { status: 400, message: err };
+    }
+}
+
+
+
 const findFlightById = async id => {
     try {
         // If no flight is found, it will return null
@@ -41,10 +87,6 @@ const findFlightById = async id => {
     }
 }
 
-const findAllFlights = async () => {
-    const flights = await Flight.find(); // GET all flights
-    return flights;
 
-}
 
-module.exports = { createFlight, findFlightById, findAllFlights };
+module.exports = { createFlight, findFlightById, findAllFlights, updateFlight, deleteFlight };
