@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Center, FlightInfoContainer } from '../styles'
+import { AppNav } from '../features/AppNav';
 
 export const FlightList = () => {
 
@@ -12,20 +14,26 @@ export const FlightList = () => {
     }, []);
     return (
         <div>
+            <AppNav />
+            <Center> I want to see if this works</Center>
+
             {/* Transform the flights array into an array of JSX elements */}
             {flights.map(flight => {
                 // use the mongodb id as the unique key
                 return (
                     <div key={flight._id}>
-                        {/* Destructure out the flight data*/}
-                        <span flight={flight} />
-                        <span> {[flight.flightNumber, flight.departureDate]}</span>
+                        <FlightInfoContainer flight={flight} />
                     </div>
                 );
             })}
 
         </div>
-
     );
-
 }
+
+// Props explanation is in video 30 @ 12:40
+// Styled-components is in video 33 @ 40:00
+// React-Router-Dom is in video 33 @58:00
+// Redux is in video 35 @ 19:00
+//{/* Destructure out the flight data*/}
+//<span> {[flight.flightNumber, flight.departureDate]}</span>
