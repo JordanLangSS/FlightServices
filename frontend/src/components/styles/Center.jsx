@@ -6,11 +6,3 @@ export const Center = styled.div`
     justify-content: center;
     align-items: center;
 `;
-
-// export const flightInfoContainer = () => {
-//     <>
-//         <Center>
-            
-//         </Center>
-//     </>
-// }
