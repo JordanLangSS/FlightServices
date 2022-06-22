@@ -1,5 +1,5 @@
 
-import { GridContainer, FlightNumberGrid, DepDateGrid, ArrDateGrid, ArrAirport, FillerGrid, DepAirport } from "./styles/FlightInfoGrid";
+import { GridContainer, FlightNumberGrid, DepDateGrid, ArrDateGrid, ArrAirportGrid, FlightTime, DepAirportGrid, NumPassGrid, PassLimitGrid } from "./styles/FlightInfoGrid";
 import { Center } from './styles/';
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { GiAirplaneDeparture, GiAirplaneArrival } from "react-icons/gi";
@@ -9,40 +9,49 @@ export const FlightInfoContainer = ({ flight }) => {
 
     return (
         <>
+
+
             <Center>
                 <GridContainer>
                     <DepDateGrid>
-                        <Center> <GiAirplaneDeparture /> </Center>
-
-                        <Center>
-
-                            {flight.departureDate}
-                        </Center>
+                        <GiAirplaneDeparture />
+                        <div> {flight.departureDate} </div>
                     </DepDateGrid>
 
                     <ArrDateGrid>
-                        <Center> <GiAirplaneArrival /> </Center>
-                        <Center>
-                            {flight.arrivalDate}
-                        </Center>
+                        <GiAirplaneArrival />
+                        <div> {flight.arrivalDate} </div>
                     </ArrDateGrid>
 
+                    <NumPassGrid>
+                        Number of Passengers:
+                        <div> {flight.currentNumOfPassengers} </div>
+                    </NumPassGrid>
+
                     <FlightNumberGrid>
-                        <Center>  Flight Number: </Center>
-                        <Center> {flight.flightNumber} </Center>
+                        Flight Number: {flight.flightNumber}
                     </FlightNumberGrid>
 
-                    <FillerGrid>
-                        <Center> <HiOutlineArrowNarrowRight size='1.5em' /> <BiTimer /> <HiOutlineArrowNarrowRight size='1.5em' /> </Center>
+                    <FlightTime>
+                        <HiOutlineArrowNarrowRight size='1.2em' />
+                        <BiTimer />
+                        <HiOutlineArrowNarrowRight size='1.2em' />
+                    </FlightTime>
 
-                    </FillerGrid>
-                    <DepAirport>
-                        <Center> {flight.departureAirport} </Center>
-                    </DepAirport>
+                    <DepAirportGrid>
+                        {flight.departureAirport}
+                    </DepAirportGrid>
 
-                    <ArrAirport>
-                        <Center> {flight.arrivalAirport} </Center>
-                    </ArrAirport>
+                    <ArrAirportGrid>
+                        {flight.arrivalAirport}
+                    </ArrAirportGrid>
+
+                    <PassLimitGrid>
+                        Passenger Limit:
+                        <div> {flight.passengerLimit} </div>
+                    </PassLimitGrid>
+
+
 
                 </GridContainer>
             </Center>

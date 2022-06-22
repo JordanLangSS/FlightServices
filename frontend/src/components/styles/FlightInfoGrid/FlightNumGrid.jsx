@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const FlightNumberGrid = styled.div`
-
-    background-color: red;
-    font-size: 1.5em;
+    text-align: center;
+    //background-color: red;
+    font-size: 1.7em;
     grid-column: 1;
     
 `

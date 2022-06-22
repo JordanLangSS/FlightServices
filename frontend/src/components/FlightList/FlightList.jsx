@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Center } from '../styles'
 import { AppNav } from '../features/AppNav';
 import { FlightInfoContainer } from '../FlightInfoContainer';
+import { AddFlight } from '../inputForms/AddFlight';
 
 export const FlightList = () => {
 
@@ -16,12 +16,14 @@ export const FlightList = () => {
     return (
         <div>
             <AppNav />
-            <Center> I want to see if this works</Center>
+
+            <AddFlight />
 
             {/* Transform the flights array into an array of JSX elements */}
             {flights.map(flight => {
                 // use the mongodb id as the unique key
                 return (
+
                     <div key={flight._id}>
                         <FlightInfoContainer flight={flight} />
                     </div>
