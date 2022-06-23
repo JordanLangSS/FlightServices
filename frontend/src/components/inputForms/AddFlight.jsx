@@ -13,7 +13,7 @@ export const AddFlight = () => {
     const passengerLimitRef = useRef();
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        //event.preventDefault();
         try {
             await axios.post('http://localhost:8085/flights',
                 {
@@ -26,6 +26,8 @@ export const AddFlight = () => {
             console.log('something went wrong');
             console.error(err);
         }
+
+        event.target.reset();
     }
 
     return (

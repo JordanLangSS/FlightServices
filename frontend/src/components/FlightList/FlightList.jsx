@@ -36,7 +36,7 @@ export const FlightList = () => {
 
 // Props explanation is in video 30 @ 12:40
 // Styled-components is in video 33 @ 40:00
-// React-Router-Dom is in video 33 @58:00
+// React-Router-Dom is in video 35 @58:00
 // Redux is in video 35 @ 19:00
 // Grids was on 6/15 in the afternoon
 

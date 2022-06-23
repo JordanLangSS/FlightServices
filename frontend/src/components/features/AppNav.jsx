@@ -5,7 +5,7 @@ export const AppNav = styled.nav`
     background-color: #0EFDF7;
     color: white;
     padding: 1em 1.5em;
-    font-size: 20px;
+    font-size: 2em;
     justify-content: space-between;
     
 `
