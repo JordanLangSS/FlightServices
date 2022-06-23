@@ -6,7 +6,7 @@ const flightSchema = new Schema({
     flightNumber: {
         //Schema.Types.ObjectId,
         type: Number,
-        //unique: true,
+        unique: true,
         required: [true, 'Must provide a flight number'],
         min: [1, 'Flight number must be greater than 0']
     },
