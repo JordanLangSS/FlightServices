@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AppNav = styled.nav`
+export const Nav = styled.nav`
     display: flex;
     background-color: #0EFDF7;
     color: white;

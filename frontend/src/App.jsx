@@ -1,11 +1,27 @@
-import { FlightList } from './components/FlightList';
+import { Home, AddFlight, Error, UpdateFlight } from "./pages";
+import { AppNav } from "./features";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
     return (
         <>
 
+            {/* Everything inside of here is going to be managed by react-router-dom
+        to allow the site to toggle between pages */}
+            <BrowserRouter>
+                <AppNav />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/AddFlight" element={<AddFlight />} />
+                    <Route path="/UpdateFlight" element={<UpdateFlight />} />
+                    <Route path="*" element={<Error />} />
 
-            <FlightList />
+
+
+                </Routes>
+                <footer> Footer </footer>
+
+            </BrowserRouter>
         </>
 
     );

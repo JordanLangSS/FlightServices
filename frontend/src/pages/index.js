@@ -1,3 +1,4 @@
 export * from './Home';
-export * from './AddFlights';
-export * from './UpdateFlights';
+export * from './AddFlight';
+export * from './UpdateFlight';
+export * from './Error';
