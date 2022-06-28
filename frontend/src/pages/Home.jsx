@@ -11,6 +11,7 @@ export const Home = () => {
             .then(res => setFlights(res.data));
         // YOU COULD PUT A .CATCH ERROR IN HERE ********
     }, []);
+
     return (
         <div>
 
@@ -28,14 +29,6 @@ export const Home = () => {
         </div>
     );
 }
-
-
-
-
-
-
-
-
 
 
 

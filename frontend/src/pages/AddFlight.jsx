@@ -2,8 +2,13 @@ import { useRef } from "react";
 import axios from 'axios';
 import { Center } from "../components/styles";
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 const schema = yup.object().shape({
     flightNum: yup.number().typeError('Please enter a valid Flight Number.').min(1, "The Flight Number must be greater than 0").max(999999, 'Flight Numbers can only be between 0 and 1,000,000').required(),
@@ -24,6 +29,9 @@ export const AddFlight = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(schema),
     });
+
+    // use to navigate back to homepage on submit
+    const navigate = useNavigate();
 
     const flightNumberRef = useRef();
     const departureDateRef = useRef();
@@ -56,75 +64,178 @@ export const AddFlight = () => {
                     departureAirport: departureAirportRef.current.value, arrivalAirport: arrivalAirportRef.current.value,
                     currentNumOfPassengers: numPassengersRef.current.value, passengerLimit: passengerLimitRef.current.value
                 });
+            navigate('../', { replace: true });
         } catch (err) {
             console.log('Something went wrong');
             console.error(err);
         }
-        reset(); // Reset all the fields to empty once the submit button is pressed and accepted
+
+
+
+        //reset(); // Reset all the fields to empty once the submit button is pressed and accepted
     }
+    // backgroundColor: '#F2F2F2  ',
 
     return (
 
-        <Center>
-            <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
 
-                <label htmlFor="flightNumber"> Flight Number: </label>
-                <div>
-                    <input id="flightNumber" name="flightNum" type="text" placeholder="Flight Number" {...flightNumberReg} ref={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }} />
-                    <p> {errors.flightNum?.message}</p>
-                </div>
+                '& > :not(style)': {
+                    m: 1,
+                    width: '20%',
+                    borderRadius: 10,
+                    margin: 5,
+                    padding: 2,
 
-                <label htmlFor="departureDate"> Departure Date: </label>
-                <div>
-                    <input id="departureDate" name="depDate" type="date" placeholder="Departure Date" {...depDateReg} ref={(e) => { depDateReg.ref(e); departureDateRef.current = e; }} />
-                    <p> {errors.depDate?.message}</p>
-                </div>
 
-                <label htmlFor="arrivalDate"> Arrival Date: </label>
-                <div>
-                    <input id="arrivalDate" name="arrDate" type="date" placeholder="Arrival Date" {...arrDateReg} ref={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }} />
-                    <p> {errors.arrDate?.message}</p>
-                </div>
+                },
+            }}
+        >
 
-                <label htmlFor="departureTime"> DepartureTime: </label>
-                <div>
-                    <input id="departureTime" name="depTime" type="text" placeholder="Departure Time" {...depTimeReg} ref={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }} />
-                    <p> {errors.depTime?.message}</p>
-                </div>
+            <Paper elevation={24} square={true}>
+                <Center>
 
-                <label htmlFor="arrivalTime"> Arrival Time: </label>
-                <div>
-                    <input id="arrivalTime" name="arrTime" type="text" placeholder="Arrival Time" {...arrTimeReg} ref={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }} />
-                    <p> {errors.arrTime?.message}</p>
-                </div>
+                    <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
 
-                <label htmlFor="departureAirport"> Departure Airport: </label>
-                <div>
-                    <input id="departureAirport" name="depAirport" type="text" placeholder="Departure Airport" {...depAirportReg} ref={(e) => { depAirportReg.ref(e); departureAirportRef.current = e; }} />
-                    <p> {errors.depAirport?.message}</p>
-                </div>
+                        <div>
+                            <TextField
+                                id="flightNumber"
+                                name="flightNum"
+                                label="Flight Number"
+                                variant="outlined"
+                                color="primary"
+                                margin="normal"
+                                required
+                                helperText={errors.flightNum?.message}
+                                {...flightNumberReg}
+                                inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
+                            >
+                            </TextField>
+                        </div>
 
-                <label htmlFor="arrivalAirport"> Arrival Airport: </label>
-                <div>
-                    <input id="arrivalAirport" name="arrAirport" type="text" placeholder="Arrival Airport" {...arrAirportReg} ref={(e) => { arrAirportReg.ref(e); arrivalAirportRef.current = e; }} />
-                    <p> {errors.arrAirport?.message}</p>
-                </div>
+                        <label htmlFor="departureDate"> Departure Date: </label>
+                        <div>
+                            <input id="departureDate" name="depDate" type="date" placeholder="Departure Date" {...depDateReg} ref={(e) => { depDateReg.ref(e); departureDateRef.current = e; }} />
+                            <span> {errors.depDate?.message}</span>
+                        </div>
 
-                <label htmlFor="numPassengers"> Current Number of Passengers: </label>
-                <div>
-                    <input id="numPassengers" name="numPass" type="text" placeholder="Current Number of Passengers" {...numPassReg} ref={(e) => { numPassReg.ref(e); numPassengersRef.current = e; }} />
-                    <p> {errors.numPass?.message}</p>
-                </div>
+                        <label htmlFor="arrivalDate"> Arrival Date: </label>
+                        <div>
+                            <input id="arrivalDate" name="arrDate" type="date" placeholder="Arrival Date" {...arrDateReg} ref={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }} />
+                            <span> {errors.arrDate?.message}</span>
+                        </div>
 
-                <label htmlFor="passengerLimit"> Passenger Limit: </label>
-                <div>
-                    <input id="passengerLimit" name="passLimit" type="text" placeholder="Passenger Limit" {...passLimitReg} ref={(e) => { passLimitReg.ref(e); passengerLimitRef.current = e; }} />
-                    <p> {errors.passLimit?.message}</p>
-                </div>
+                        <div>
+                            <TextField
+                                id="departureTime"
+                                name="depTime"
+                                label="Departure Time"
+                                variant="outlined"
+                                color="primary"
+                                margin="normal"
+                                required
+                                helperText={errors.depTime?.message}
+                                {...depTimeReg}
+                                inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
+                            >
+                            </TextField>
+                        </div>
 
-                <input type="submit" value="Add Flight" />
-            </form>
-        </Center>
+                        <div>
+                            <TextField
+                                id="arrivalTime"
+                                name="arrTime"
+                                label="Arrival Time"
+                                variant="outlined"
+                                color="primary"
+                                margin="normal"
+                                required
+                                helperText={errors.arrTime?.message}
+                                {...arrTimeReg}
+                                inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
+                            >
+                            </TextField>
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="departureAirport"
+                                name="depAirport"
+                                label="Departure Airport"
+                                variant="outlined"
+                                color="primary"
+                                margin="normal"
+                                required
+                                helperText={errors.depAirport?.message}
+                                {...depAirportReg}
+                                inputRef={(e) => { depAirportReg.ref(e); departureAirportRef.current = e; }}
+                            >
+                            </TextField>
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="arrivalAirport"
+                                name="arrAirport"
+                                label="Arrival Airport"
+                                variant="outlined"
+                                color="primary"
+                                margin="normal"
+                                required
+                                helperText={errors.arrAirport?.message}
+                                {...arrAirportReg}
+                                inputRef={(e) => { arrAirportReg.ref(e); arrivalAirportRef.current = e; }}
+                            >
+                            </TextField>
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="numPassengers"
+                                name="numPass"
+                                label="Number of Passengers"
+                                variant="outlined"
+                                color="primary"
+                                margin="normal"
+                                required
+                                helperText={errors.numPass?.message}
+                                {...numPassReg}
+                                inputRef={(e) => { numPassReg.ref(e); numPassengersRef.current = e; }}
+                            >
+                            </TextField>
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="passengerLimit"
+                                name="passLimit"
+                                label="Passenger Limit"
+                                variant="outlined"
+                                color="primary"
+                                margin="normal"
+                                required
+                                helperText={errors.passLimit?.message}
+                                {...passLimitReg}
+                                inputRef={(e) => { passLimitReg.ref(e); passengerLimitRef.current = e; }}
+                            >
+                            </TextField>
+                        </div>
+                        <Center>
+                            <Button type="submit" variant="contained">
+                                Create Flight
+                            </Button>
+                        </Center>
+
+
+                    </form>
+
+                </Center>
+            </Paper>
+        </Box>
     );
 
 }
