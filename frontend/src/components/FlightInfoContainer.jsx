@@ -16,22 +16,13 @@ export const FlightInfoContainer = ({ flight }) => {
     const navigate = useNavigate();
 
     // Function to delete the specific flight number onClick
-    const handleDelete = async () => {
-        //event.preventDefault();
+    const handleDelete = async (event) => {
+        event.preventDefault();
         try {
             // use the flight number from the current clicked button to delete the flight
             await axios.delete('http://localhost:8085/flights/' + flight.flightNumber);
-            //navigate('./', { replace: true });
+            navigate(0);
 
-            flight.map(flight => {
-                // use the mongodb id as the unique key
-                return (
-
-                    <div>
-                        <FlightInfoContainer />
-                    </div>
-                );
-            })
         } catch (err) {
             console.error(err);
         }
