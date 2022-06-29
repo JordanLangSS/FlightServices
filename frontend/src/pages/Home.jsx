@@ -4,6 +4,7 @@ import { EditFlight } from '../components/EditFlight';
 import { DeleteFlight } from "../components/DeleteFlight";
 import { Table, tableCellClasses, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Content } from '../components/styles/backGround';
 
 export const Home = () => {
 
@@ -11,12 +12,13 @@ export const Home = () => {
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: theme.palette.common.black,
             color: theme.palette.common.white,
-            fontSize: 20,
+            fontSize: 25,
             textAlign: 'center'
         },
         [`&.${tableCellClasses.body}`]: {
             fontSize: 20,
-            textAlign: 'center'
+            textAlign: 'center',
+            color: theme.palette.common.white,
         },
     }));
 
@@ -24,10 +26,12 @@ export const Home = () => {
     const StyledTableRow = styled(TableRow)(({ theme }) => ({
         '&:nth-of-type(odd)': {
             backgroundColor: theme.palette.action.hover,
+            color: theme.palette.common.white,
         },
         // hide last border
         '&:last-child td, &:last-child th': {
             border: 0,
+
 
         },
     }));
@@ -41,22 +45,24 @@ export const Home = () => {
     }, []);
 
     return (
-        <div>
+        <Content >
 
-            <TableContainer component={Paper} sx={{ marginTop: 5 }}>
-                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '80%', margin: 'auto', borderRadius: 10 }}>
+            <TableContainer sx={{ height: '2000px', overflowY: "scroll" }}>
+                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '80%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
                     <TableHead>
+                        <StyledTableRow>
 
-                        <StyledTableCell>Flight Number</StyledTableCell>
-                        <StyledTableCell>Departure Date</StyledTableCell>
-                        <StyledTableCell>Arrival Date</StyledTableCell>
-                        <StyledTableCell>Departure Time</StyledTableCell>
-                        <StyledTableCell>Arrival Time</StyledTableCell>
-                        <StyledTableCell>Departure Airport</StyledTableCell>
-                        <StyledTableCell>Arrival Airport</StyledTableCell>
-                        <StyledTableCell>Current Passengers</StyledTableCell>
-                        <StyledTableCell>Passenger Limit</StyledTableCell>
-                        <StyledTableCell> Actions</StyledTableCell>
+                            <StyledTableCell>Flight Number</StyledTableCell>
+                            <StyledTableCell>Departure Date</StyledTableCell>
+                            <StyledTableCell>Arrival Date</StyledTableCell>
+                            <StyledTableCell>Departure Time</StyledTableCell>
+                            <StyledTableCell>Arrival Time</StyledTableCell>
+                            <StyledTableCell>Departure Airport</StyledTableCell>
+                            <StyledTableCell>Arrival Airport</StyledTableCell>
+                            <StyledTableCell>Current Passengers</StyledTableCell>
+                            <StyledTableCell>Passenger Limit</StyledTableCell>
+                            <StyledTableCell> Actions</StyledTableCell>
+                        </StyledTableRow>
 
                     </TableHead>
                     <TableBody>
@@ -92,10 +98,8 @@ export const Home = () => {
 
             </TableContainer>
 
+        </Content>
 
-
-
-        </div>
     );
 }
 

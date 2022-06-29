@@ -3,6 +3,12 @@ import { Nav, NavItem, NavLink, NavSection } from "../components/nav";
 export const AppNav = () => {
     return (
         <Nav>
+            <NavSection>
+                <NavItem fontFamily='Lobster' fontSize='5rem'>
+                    Air Express
+                </NavItem>
+
+            </NavSection>
 
             <NavSection jc="flex-end">
 

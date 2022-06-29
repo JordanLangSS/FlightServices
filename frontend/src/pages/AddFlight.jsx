@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useRef } from "react";
 import axios from 'axios';
 import { Center } from "../components/styles";
@@ -9,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { Content } from '../components/styles/backGround';
 
 const schema = yup.object().shape({
     flightNum: yup.number().typeError('Please enter a valid Flight Number.').min(1, "The Flight Number must be greater than 0").max(999999, 'Flight Numbers can only be between 0 and 1,000,000').required(),
@@ -70,172 +72,200 @@ export const AddFlight = () => {
             console.error(err);
         }
 
-
-
         //reset(); // Reset all the fields to empty once the submit button is pressed and accepted
     }
     // backgroundColor: '#F2F2F2  ',
 
+    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+
+    const handleChange = (newValue) => {
+        setValue(newValue);
+    };
     return (
+        <Content>
+            <div>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
 
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                        '& > :not(style)': {
+                            borderRadius: 10,
+                            margin: 5,
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            paddingBottom: 4,
+                            paddingTop: 2
+                        },
+                    }}
+                >
 
-                '& > :not(style)': {
-                    m: 1,
-                    width: '20%',
-                    borderRadius: 10,
-                    margin: 5,
-                    padding: 2,
-
-
-                },
-            }}
-        >
-
-            <Paper elevation={24} square={true}>
-                <Center>
-
-                    <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
-
-                        <div>
-                            <TextField
-                                id="flightNumber"
-                                name="flightNum"
-                                label="Flight Number"
-                                variant="outlined"
-                                color="primary"
-                                margin="normal"
-                                required
-                                helperText={errors.flightNum?.message}
-                                {...flightNumberReg}
-                                inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
-                            >
-                            </TextField>
-                        </div>
-
-                        <label htmlFor="departureDate"> Departure Date: </label>
-                        <div>
-                            <input id="departureDate" name="depDate" type="date" placeholder="Departure Date" {...depDateReg} ref={(e) => { depDateReg.ref(e); departureDateRef.current = e; }} />
-                            <span> {errors.depDate?.message}</span>
-                        </div>
-
-                        <label htmlFor="arrivalDate"> Arrival Date: </label>
-                        <div>
-                            <input id="arrivalDate" name="arrDate" type="date" placeholder="Arrival Date" {...arrDateReg} ref={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }} />
-                            <span> {errors.arrDate?.message}</span>
-                        </div>
-
-                        <div>
-                            <TextField
-                                id="departureTime"
-                                name="depTime"
-                                label="Departure Time"
-                                variant="outlined"
-                                color="primary"
-                                margin="normal"
-                                required
-                                helperText={errors.depTime?.message}
-                                {...depTimeReg}
-                                inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
-                            >
-                            </TextField>
-                        </div>
-
-                        <div>
-                            <TextField
-                                id="arrivalTime"
-                                name="arrTime"
-                                label="Arrival Time"
-                                variant="outlined"
-                                color="primary"
-                                margin="normal"
-                                required
-                                helperText={errors.arrTime?.message}
-                                {...arrTimeReg}
-                                inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
-                            >
-                            </TextField>
-                        </div>
-
-                        <div>
-                            <TextField
-                                id="departureAirport"
-                                name="depAirport"
-                                label="Departure Airport"
-                                variant="outlined"
-                                color="primary"
-                                margin="normal"
-                                required
-                                helperText={errors.depAirport?.message}
-                                {...depAirportReg}
-                                inputRef={(e) => { depAirportReg.ref(e); departureAirportRef.current = e; }}
-                            >
-                            </TextField>
-                        </div>
-
-                        <div>
-                            <TextField
-                                id="arrivalAirport"
-                                name="arrAirport"
-                                label="Arrival Airport"
-                                variant="outlined"
-                                color="primary"
-                                margin="normal"
-                                required
-                                helperText={errors.arrAirport?.message}
-                                {...arrAirportReg}
-                                inputRef={(e) => { arrAirportReg.ref(e); arrivalAirportRef.current = e; }}
-                            >
-                            </TextField>
-                        </div>
-
-                        <div>
-                            <TextField
-                                id="numPassengers"
-                                name="numPass"
-                                label="Number of Passengers"
-                                variant="outlined"
-                                color="primary"
-                                margin="normal"
-                                required
-                                helperText={errors.numPass?.message}
-                                {...numPassReg}
-                                inputRef={(e) => { numPassReg.ref(e); numPassengersRef.current = e; }}
-                            >
-                            </TextField>
-                        </div>
-
-                        <div>
-                            <TextField
-                                id="passengerLimit"
-                                name="passLimit"
-                                label="Passenger Limit"
-                                variant="outlined"
-                                color="primary"
-                                margin="normal"
-                                required
-                                helperText={errors.passLimit?.message}
-                                {...passLimitReg}
-                                inputRef={(e) => { passLimitReg.ref(e); passengerLimitRef.current = e; }}
-                            >
-                            </TextField>
-                        </div>
+                    <Paper elevation={24} square={true}>
                         <Center>
-                            <Button type="submit" variant="contained">
-                                Create Flight
-                            </Button>
+
+                            <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
+                                <Center><h1>Add Flight</h1></Center>
+                                <div>
+                                    <TextField
+                                        id="flightNumber"
+                                        name="flightNum"
+                                        label="Flight Number"
+                                        variant="outlined"
+                                        color="primary"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.flightNum?.message}
+                                        {...flightNumberReg}
+                                        inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
+
+                                <div>
+                                    <TextField
+                                        id="date"
+                                        label="Departure Date"
+                                        type="date"
+                                        name="depDate"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.depDate?.message}
+                                        sx={{ width: 220 }}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        {...depDateReg}
+                                        inputRef={(e) => { depDateReg.ref(e); departureDateRef.current = e; }}
+                                    />
+                                </div>
+                                <div>
+                                    <TextField
+                                        id="date"
+                                        label="Arrival Date"
+                                        type="date"
+                                        name="arrDate"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.arrDate?.message}
+                                        sx={{ width: 220 }}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        {...arrDateReg}
+                                        inputRef={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }}
+                                    />
+                                </div>
+
+                                <div>
+                                    <TextField
+                                        id="departureTime"
+                                        name="depTime"
+                                        label="Departure Time"
+                                        variant="outlined"
+                                        color="primary"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.depTime?.message}
+                                        {...depTimeReg}
+                                        inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
+
+                                <div>
+                                    <TextField
+                                        id="arrivalTime"
+                                        name="arrTime"
+                                        label="Arrival Time"
+                                        variant="outlined"
+                                        color="primary"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.arrTime?.message}
+                                        {...arrTimeReg}
+                                        inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
+
+                                <div>
+                                    <TextField
+                                        id="departureAirport"
+                                        name="depAirport"
+                                        label="Departure Airport"
+                                        variant="outlined"
+                                        color="primary"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.depAirport?.message}
+                                        {...depAirportReg}
+                                        inputRef={(e) => { depAirportReg.ref(e); departureAirportRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
+
+                                <div>
+                                    <TextField
+                                        id="arrivalAirport"
+                                        name="arrAirport"
+                                        label="Arrival Airport"
+                                        variant="outlined"
+                                        color="primary"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.arrAirport?.message}
+                                        {...arrAirportReg}
+                                        inputRef={(e) => { arrAirportReg.ref(e); arrivalAirportRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
+
+                                <div>
+                                    <TextField
+                                        id="numPassengers"
+                                        name="numPass"
+                                        label="Number of Passengers"
+                                        variant="outlined"
+                                        color="primary"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.numPass?.message}
+                                        {...numPassReg}
+                                        inputRef={(e) => { numPassReg.ref(e); numPassengersRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
+
+                                <div>
+                                    <TextField
+                                        id="passengerLimit"
+                                        name="passLimit"
+                                        label="Passenger Limit"
+                                        variant="outlined"
+                                        color="primary"
+                                        margin="normal"
+                                        required
+                                        helperText={errors.passLimit?.message}
+                                        {...passLimitReg}
+                                        inputRef={(e) => { passLimitReg.ref(e); passengerLimitRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
+                                <Center>
+                                    <Button type="submit" variant="contained">
+                                        Create Flight
+                                    </Button>
+                                </Center>
+
+
+                            </form>
+
                         </Center>
-
-
-                    </form>
-
-                </Center>
-            </Paper>
-        </Box>
+                    </Paper>
+                </Box >
+            </div>
+        </Content >
     );
 
 }

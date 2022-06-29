@@ -1,6 +1,7 @@
 import { Home, AddFlight, Error, UpdateFlight } from "./pages";
 import { AppNav } from "./features";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Content } from "./components/styles/backGround";
 
 const App = () => {
     return (
@@ -16,13 +17,13 @@ const App = () => {
                     <Route path="/UpdateFlight" element={<UpdateFlight />} />
                     <Route path="*" element={<Error />} />
 
-
-
                 </Routes>
                 <footer> Footer </footer>
 
             </BrowserRouter>
+
         </>
+
 
     );
 }

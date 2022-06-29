@@ -77,13 +77,12 @@ export const UpdateFlight = () => {
                 alignItems: 'center',
 
                 '& > :not(style)': {
-                    m: 1,
-                    width: '20%',
                     borderRadius: 10,
                     margin: 5,
-                    padding: 2,
-
-
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    paddingBottom: 4,
+                    paddingTop: 2
                 },
             }}
         >
@@ -92,7 +91,7 @@ export const UpdateFlight = () => {
                 <Center>
 
                     <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
-
+                        <Center><h1>Update Flight</h1></Center>
                         <div>
                             <TextField
                                 id="flightNumber"
@@ -109,16 +108,39 @@ export const UpdateFlight = () => {
                             </TextField>
                         </div>
 
-                        <label htmlFor="departureDate"> Departure Date: </label>
                         <div>
-                            <input id="departureDate" name="depDate" type="date" placeholder="Departure Date" {...depDateReg} ref={(e) => { depDateReg.ref(e); departureDateRef.current = e; }} />
-                            <span> {errors.depDate?.message}</span>
+                            <TextField
+                                id="date"
+                                label="Departure Date"
+                                type="date"
+                                name="depDate"
+                                margin="normal"
+                                required
+                                helperText={errors.depDate?.message}
+                                sx={{ width: 220 }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                {...depDateReg}
+                                inputRef={(e) => { depDateReg.ref(e); departureDateRef.current = e; }}
+                            />
                         </div>
-
-                        <label htmlFor="arrivalDate"> Arrival Date: </label>
                         <div>
-                            <input id="arrivalDate" name="arrDate" type="date" placeholder="Arrival Date" {...arrDateReg} ref={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }} />
-                            <span> {errors.arrDate?.message}</span>
+                            <TextField
+                                id="date"
+                                label="Arrival Date"
+                                type="date"
+                                name="arrDate"
+                                margin="normal"
+                                required
+                                helperText={errors.arrDate?.message}
+                                sx={{ width: 220 }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                {...arrDateReg}
+                                inputRef={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }}
+                            />
                         </div>
 
                         <div>
@@ -218,7 +240,7 @@ export const UpdateFlight = () => {
                         </div>
                         <Center>
                             <Button type="submit" variant="contained">
-                                Update Flight
+                                Create Flight
                             </Button>
                         </Center>
 
@@ -227,7 +249,7 @@ export const UpdateFlight = () => {
 
                 </Center>
             </Paper>
-        </Box>
+        </Box >
     );
 
 }
