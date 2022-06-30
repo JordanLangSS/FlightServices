@@ -2,6 +2,7 @@ import { useRef } from "react";
 import axios from 'axios';
 import { Center } from "../components/styles";
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
@@ -25,9 +26,11 @@ const schema = yup.object().shape({
 export const UpdateFlight = () => {
 
     // Create the hook for react-hook-form
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
+    // use to navigate back to homepage on submit
+    const navigate = useNavigate();
 
     const flightNumberRef = useRef();
     const departureDateRef = useRef();
@@ -60,11 +63,11 @@ export const UpdateFlight = () => {
                     departureAirport: departureAirportRef.current.value, arrivalAirport: arrivalAirportRef.current.value,
                     currentNumOfPassengers: numPassengersRef.current.value, passengerLimit: passengerLimitRef.current.value
                 });
+            navigate('../', { replace: true });
         } catch (err) {
             console.log('Something went wrong');
             console.error(err);
         }
-        reset(); // Reset all the fields to empty once the submit button is pressed and accepted
     }
     // backgroundColor: '#F2F2F2  ',
 
@@ -103,7 +106,6 @@ export const UpdateFlight = () => {
                                     margin="normal"
                                     error={errors.flightNum?.message}
                                     helperText={errors.flightNum?.message}
-
                                     {...flightNumberReg}
                                     inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
                                 >

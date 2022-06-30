@@ -16,7 +16,6 @@ export const DeleteFlight = ({ flight }) => {
             await axios.delete('http://localhost:8085/flights/' + flight.flightNumber);
             navigate(0);
 
-
         } catch (err) {
             console.error(err);
         }

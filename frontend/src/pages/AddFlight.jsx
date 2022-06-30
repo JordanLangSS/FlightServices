@@ -19,7 +19,7 @@ const helperTextStyles = makeStyles(theme => ({
             color: 'red'
         }
     },
-    error: {} //<--this is required to make it work
+    error: {} // use error to change the box and text color to red on bad inputs
 }));
 
 const schema = yup.object().shape({
@@ -33,12 +33,11 @@ const schema = yup.object().shape({
     numPass: yup.number().typeError('Please enter a valid Number of Passengers.').min(0, "The Number of passengers must be a positive number").max(400, 'The number of passengers cannot exceed 400').required(),
     passLimit: yup.number().typeError("Please enter a valid Passenger Limit").min(1, "The Passenger limit must be greater than 0").max(400, "The Passenger Limit cannot exceed 400").required()
 });
-//The Passenger limit must be greater than 0
 
 export const AddFlight = () => {
 
     // Create the hook for react-hook-form
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
 
