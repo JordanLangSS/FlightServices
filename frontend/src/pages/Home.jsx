@@ -4,7 +4,7 @@ import { EditFlight } from '../components/EditFlight';
 import { DeleteFlight } from "../components/DeleteFlight";
 import { Table, tableCellClasses, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Content } from '../components/styles/backGround';
+//import { Content } from '../components/styles/BackGround';
 
 export const Home = () => {
 
@@ -45,60 +45,60 @@ export const Home = () => {
     }, []);
 
     return (
-        <Content >
 
-            <TableContainer sx={{ height: '2000px', overflowY: "scroll" }}>
-                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '80%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
-                    <TableHead>
-                        <StyledTableRow>
 
-                            <StyledTableCell>Flight Number</StyledTableCell>
-                            <StyledTableCell>Departure Date</StyledTableCell>
-                            <StyledTableCell>Arrival Date</StyledTableCell>
-                            <StyledTableCell>Departure Time</StyledTableCell>
-                            <StyledTableCell>Arrival Time</StyledTableCell>
-                            <StyledTableCell>Departure Airport</StyledTableCell>
-                            <StyledTableCell>Arrival Airport</StyledTableCell>
-                            <StyledTableCell>Current Passengers</StyledTableCell>
-                            <StyledTableCell>Passenger Limit</StyledTableCell>
-                            <StyledTableCell> Actions</StyledTableCell>
-                        </StyledTableRow>
+        <TableContainer sx={{ height: '165rem', overflowY: "scroll" }}>
+            <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '80%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
+                <TableHead>
+                    <StyledTableRow>
 
-                    </TableHead>
-                    <TableBody>
+                        <StyledTableCell>Flight Number</StyledTableCell>
+                        <StyledTableCell>Departure Date</StyledTableCell>
+                        <StyledTableCell>Arrival Date</StyledTableCell>
+                        <StyledTableCell>Departure Time</StyledTableCell>
+                        <StyledTableCell>Arrival Time</StyledTableCell>
+                        <StyledTableCell>Departure Airport</StyledTableCell>
+                        <StyledTableCell>Arrival Airport</StyledTableCell>
+                        <StyledTableCell>Current Passengers</StyledTableCell>
+                        <StyledTableCell>Passenger Limit</StyledTableCell>
+                        <StyledTableCell> Actions</StyledTableCell>
+                    </StyledTableRow>
 
-                        {/* Transform the flights array into an array of JSX elements */}
-                        {flights.map(flight => {
-                            // use the mongodb id as the unique key
-                            return (
-                                <StyledTableRow
-                                    key={flight._id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
+                </TableHead>
+                <TableBody>
 
-                                    <StyledTableCell>{flight.flightNumber}</StyledTableCell>
-                                    <StyledTableCell>{flight.departureDate}</StyledTableCell>
-                                    <StyledTableCell>{flight.arrivalDate}</StyledTableCell>
-                                    <StyledTableCell>{flight.departureTime}</StyledTableCell>
-                                    <StyledTableCell>{flight.arrivalTime}</StyledTableCell>
-                                    <StyledTableCell>{flight.departureAirport}</StyledTableCell>
-                                    <StyledTableCell>{flight.arrivalAirport}</StyledTableCell>
-                                    <StyledTableCell>{flight.currentNumOfPassengers}</StyledTableCell>
-                                    <StyledTableCell>{flight.passengerLimit}</StyledTableCell>
-                                    <StyledTableCell >
-                                        <EditFlight />
-                                        <DeleteFlight flight={flight} />
-                                    </StyledTableCell>
+                    {/* Transform the flights array into an array of JSX elements */}
+                    {flights.map(flight => {
+                        // use the mongodb id as the unique key
+                        return (
+                            <StyledTableRow
+                                key={flight._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
 
-                                </StyledTableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
+                                <StyledTableCell>{flight.flightNumber}</StyledTableCell>
+                                <StyledTableCell>{flight.departureDate}</StyledTableCell>
+                                <StyledTableCell>{flight.arrivalDate}</StyledTableCell>
+                                <StyledTableCell>{flight.departureTime}</StyledTableCell>
+                                <StyledTableCell>{flight.arrivalTime}</StyledTableCell>
+                                <StyledTableCell>{flight.departureAirport}</StyledTableCell>
+                                <StyledTableCell>{flight.arrivalAirport}</StyledTableCell>
+                                <StyledTableCell>{flight.currentNumOfPassengers}</StyledTableCell>
+                                <StyledTableCell>{flight.passengerLimit}</StyledTableCell>
+                                <StyledTableCell >
+                                    <EditFlight />
+                                    <DeleteFlight flight={flight} />
+                                </StyledTableCell>
 
-            </TableContainer>
+                            </StyledTableRow>
+                        );
+                    })}
+                </TableBody>
+            </Table>
 
-        </Content>
+        </TableContainer>
+
+
 
     );
 }

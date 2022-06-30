@@ -1,11 +1,11 @@
 import { Home, AddFlight, Error, UpdateFlight } from "./pages";
 import { AppNav } from "./features";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Content } from "./components/styles/backGround";
+import { Content } from "./components/styles/BackGround";
 
 const App = () => {
     return (
-        <>
+        <Content>
 
             {/* Everything inside of here is going to be managed by react-router-dom
         to allow the site to toggle between pages */}
@@ -18,11 +18,9 @@ const App = () => {
                     <Route path="*" element={<Error />} />
 
                 </Routes>
-                <footer> Footer </footer>
-
             </BrowserRouter>
 
-        </>
+        </Content>
 
 
     );
