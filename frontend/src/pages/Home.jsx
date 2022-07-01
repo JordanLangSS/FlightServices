@@ -6,6 +6,7 @@ import { Table, tableCellClasses, TableContainer, TableHead, TableBody, TableRow
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import SearchBar from "material-ui-search-bar";
+import { UpdateFlight } from './UpdateFlight';
 
 export const Home = () => {
 
@@ -114,11 +115,11 @@ export const Home = () => {
                                     <StyledTableCell>{flight.currentNumOfPassengers}</StyledTableCell>
                                     <StyledTableCell>{flight.passengerLimit}</StyledTableCell>
                                     <StyledTableCell >
-                                        <EditFlight />
+                                        <EditFlight flight={flight} />
                                         <DeleteFlight flight={flight} />
                                     </StyledTableCell>
-
                                 </StyledTableRow>
+
                             );
                         })}
                     </TableBody>

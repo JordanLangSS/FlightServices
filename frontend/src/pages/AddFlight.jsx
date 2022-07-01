@@ -25,13 +25,13 @@ const helperTextStyles = makeStyles(theme => ({
 const schema = yup.object().shape({
     flightNum: yup.number().typeError('Please enter a valid Flight Number.').min(1, "The Flight Number must be greater than 0").max(999999, 'Flight Numbers can only be between 0 and 1,000,000').required(),
     depDate: yup.date().typeError('Please select a Departure Date.').required(),
-    arrDate: yup.date().typeError('Please enter an Arrival Date.').required(),
+    arrDate: yup.date().typeError('Please enter an Arrival Date.').min(yup.ref('depDate'), "Arrival date must be after Departure date").required(),
     depTime: yup.string().required('Please enter a valid Departure Time.'),
     arrTime: yup.string().required('Please enter a valid Arrival Time.'),
     depAirport: yup.string().matches(/^[a-zA-Z]{0,3}$/, "Airport Code must be three letters").required('Please enter a valid Departure Airport.'),
     arrAirport: yup.string().matches(/^[a-zA-Z]{0,3}$/, "Airport Code must be three letters").required('Please enter a valid Arrival Airport.'),
     numPass: yup.number().typeError('Please enter a valid Number of Passengers.').min(0, "The Number of passengers must be a positive number").max(400, 'The number of passengers cannot exceed 400').required(),
-    passLimit: yup.number().typeError("Please enter a valid Passenger Limit").min(1, "The Passenger limit must be greater than 0").max(400, "The Passenger Limit cannot exceed 400").required()
+    passLimit: yup.number().typeError("Please enter a valid Passenger Limit").min(1, "The Passenger limit must be greater than 0").max(400, "The Passenger Limit cannot exceed 400").moreThan(yup.ref('numPass'), "Number of passengers must be less than the limit").required()
 });
 
 export const AddFlight = () => {
