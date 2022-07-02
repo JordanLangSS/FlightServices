@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { useRef } from "react";
 import axios from 'axios';
@@ -11,16 +12,6 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
-
-const helperTextStyles = makeStyles(theme => ({
-    root: {
-        margin: 4,
-        '&$error': {
-            color: 'red'
-        }
-    },
-    error: {} // use error to change the box and text color to red on bad inputs
-}));
 
 const schema = yup.object().shape({
     flightNum: yup.number().typeError('Please enter a valid Flight Number.').min(1, "The Flight Number must be greater than 0").max(999999, 'Flight Numbers can only be between 0 and 1,000,000').required(),
@@ -109,12 +100,12 @@ export const AddFlight = () => {
                             <Center><h1>Create Flight</h1></Center>
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="flightNumber"
                                     name="flightNum"
                                     label="Flight Number"
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.flightNum?.message}
                                     helperText={errors.flightNum?.message}
 
@@ -126,14 +117,13 @@ export const AddFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="date"
                                     label="Departure Date"
                                     type="date"
                                     name="depDate"
-                                    margin="normal"
                                     error={errors.depDate?.message}
                                     helperText={errors.depDate?.message}
-                                    sx={{ width: 220 }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -141,16 +131,16 @@ export const AddFlight = () => {
                                     inputRef={(e) => { depDateReg.ref(e); departureDateRef.current = e; }}
                                 />
                             </div>
+
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="date"
                                     label="Arrival Date"
                                     type="date"
                                     name="arrDate"
-                                    margin="normal"
                                     error={errors.arrDate?.message}
                                     helperText={errors.arrDate?.message}
-                                    sx={{ width: 220 }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -161,44 +151,47 @@ export const AddFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="departureTime"
                                     name="depTime"
                                     label="Departure Time"
-                                    variant="outlined"
-                                    color="primary"
-                                    margin="normal"
+                                    type="time"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     error={errors.depTime?.message}
                                     helperText={errors.depTime?.message}
                                     {...depTimeReg}
                                     inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
-                                >
-                                </TextField>
-                            </div>
 
+                                />
+                            </div>
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="arrivalTime"
                                     name="arrTime"
                                     label="Arrival Time"
-                                    variant="outlined"
-                                    color="primary"
-                                    margin="normal"
+                                    type="time"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     error={errors.arrTime?.message}
                                     helperText={errors.arrTime?.message}
                                     {...arrTimeReg}
                                     inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
-                                >
-                                </TextField>
+
+                                />
                             </div>
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="departureAirport"
                                     name="depAirport"
                                     label="Departure Airport"
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.depAirport?.message}
                                     helperText={errors.depAirport?.message}
                                     {...depAirportReg}
@@ -209,12 +202,12 @@ export const AddFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="arrivalAirport"
                                     name="arrAirport"
                                     label="Arrival Airport"
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.arrAirport?.message}
                                     helperText={errors.arrAirport?.message}
                                     {...arrAirportReg}
@@ -225,12 +218,12 @@ export const AddFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="numPassengers"
                                     name="numPass"
                                     label="Number of Passengers"
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.numPass?.message}
                                     helperText={errors.numPass?.message}
                                     {...numPassReg}
@@ -241,12 +234,13 @@ export const AddFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="passengerLimit"
                                     name="passLimit"
                                     label="Passenger Limit"
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
+
                                     error={errors.passLimit?.message}
                                     helperText={errors.passLimit?.message}
                                     {...passLimitReg}

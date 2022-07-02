@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@material-ui/core/IconButton';
 
 export const EditFlight = ({ flight }) => {
 
@@ -12,8 +13,10 @@ export const EditFlight = ({ flight }) => {
     }
 
     return (
-        <>
-            <EditIcon sx={{ margin: 1 }} onClick={handleEdit} />
-        </>
+        <IconButton style={{
+            color: '#17EAF9',
+        }}>
+            <EditIcon fontSize="large" sx={{ margin: 1 }} onClick={handleEdit} />
+        </IconButton>
     );
 }

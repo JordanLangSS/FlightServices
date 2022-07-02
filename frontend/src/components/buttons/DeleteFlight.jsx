@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 import axios from 'axios';
 
@@ -22,8 +23,8 @@ export const DeleteFlight = ({ flight }) => {
     }
 
     return (
-        <>
-            <DeleteIcon sx={{ margin: 1 }} onClick={handleDelete} />
-        </>
+        <IconButton color="secondary">
+            <DeleteIcon fontSize="large" sx={{ margin: 1 }} onClick={handleDelete} />
+        </IconButton>
     );
 }

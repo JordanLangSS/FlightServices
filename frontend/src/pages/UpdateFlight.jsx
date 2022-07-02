@@ -101,13 +101,13 @@ export const UpdateFlight = () => {
                             <Center><h1>Update Flight</h1></Center>
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="flightNumber"
                                     name="flightNum"
                                     label="Flight Number"
                                     defaultValue={flightData.flight?.flightNumber === undefined ? '' : flightData.flight?.flightNumber}
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.flightNum?.message}
                                     helperText={errors.flightNum?.message}
                                     {...flightNumberReg}
@@ -118,15 +118,15 @@ export const UpdateFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="date"
                                     label="Departure Date"
                                     defaultValue={flightData.flight?.departureDate === undefined ? '' : flightData.flight?.departureDate}
                                     type="date"
                                     name="depDate"
-                                    margin="normal"
                                     error={errors.depDate?.message}
                                     helperText={errors.depDate?.message}
-                                    sx={{ width: 220 }}
+
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -136,15 +136,14 @@ export const UpdateFlight = () => {
                             </div>
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="date"
                                     label="Arrival Date"
                                     defaultValue={flightData.flight?.arrivalDate === undefined ? '' : flightData.flight?.arrivalDate}
                                     type="date"
                                     name="arrDate"
-                                    margin="normal"
                                     error={errors.arrDate?.message}
                                     helperText={errors.arrDate?.message}
-                                    sx={{ width: 220 }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -155,47 +154,50 @@ export const UpdateFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="departureTime"
                                     name="depTime"
                                     label="Departure Time"
                                     defaultValue={flightData.flight?.departureTime === undefined ? '' : flightData.flight?.departureTime}
-                                    variant="outlined"
-                                    color="primary"
-                                    margin="normal"
+                                    type="time"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     error={errors.depTime?.message}
                                     helperText={errors.depTime?.message}
                                     {...depTimeReg}
                                     inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
-                                >
-                                </TextField>
-                            </div>
 
+                                />
+                            </div>
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="arrivalTime"
                                     name="arrTime"
                                     label="Arrival Time"
                                     defaultValue={flightData.flight?.arrivalTime === undefined ? '' : flightData.flight?.arrivalTime}
-                                    variant="outlined"
-                                    color="primary"
-                                    margin="normal"
+                                    type="time"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     error={errors.arrTime?.message}
                                     helperText={errors.arrTime?.message}
                                     {...arrTimeReg}
                                     inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
-                                >
-                                </TextField>
+
+                                />
                             </div>
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="departureAirport"
                                     name="depAirport"
                                     label="Departure Airport"
                                     defaultValue={flightData.flight?.departureAirport === undefined ? '' : flightData.flight?.departureAirport}
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.depAirport?.message}
                                     helperText={errors.depAirport?.message}
                                     {...depAirportReg}
@@ -206,13 +208,13 @@ export const UpdateFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="arrivalAirport"
                                     name="arrAirport"
                                     label="Arrival Airport"
                                     defaultValue={flightData.flight?.arrivalAirport === undefined ? '' : flightData.flight?.arrivalAirport}
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.arrAirport?.message}
                                     helperText={errors.arrAirport?.message}
                                     {...arrAirportReg}
@@ -223,13 +225,13 @@ export const UpdateFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="numPassengers"
                                     name="numPass"
                                     label="Number of Passengers"
                                     defaultValue={flightData.flight?.currentNumOfPassengers === undefined ? '' : flightData.flight?.currentNumOfPassengers}
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.numPass?.message}
                                     helperText={errors.numPass?.message}
                                     {...numPassReg}
@@ -240,13 +242,13 @@ export const UpdateFlight = () => {
 
                             <div>
                                 <TextField
+                                    sx={{ width: 350, paddingBottom: 3 }}
                                     id="passengerLimit"
                                     name="passLimit"
                                     label="Passenger Limit"
                                     defaultValue={flightData.flight?.passengerLimit === undefined ? '' : flightData.flight?.passengerLimit}
                                     variant="outlined"
                                     color="primary"
-                                    margin="normal"
                                     error={errors.passLimit?.message}
                                     helperText={errors.passLimit?.message}
                                     {...passLimitReg}

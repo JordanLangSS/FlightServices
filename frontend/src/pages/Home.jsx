@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { EditFlight } from '../components/EditFlight';
-import { DeleteFlight } from "../components/DeleteFlight";
-import { Table, tableCellClasses, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
+import { EditFlight } from '../components/buttons';
+import { DeleteFlight } from '../components/buttons';
+import { Table, tableCellClasses, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import SearchBar from "material-ui-search-bar";
-import { UpdateFlight } from './UpdateFlight';
 
 export const Home = () => {
 
@@ -76,7 +74,7 @@ export const Home = () => {
             />
 
             <TableContainer sx={{ height: '165rem', overflowY: "scroll" }}>
-                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '80%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
+                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '85%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
                     <TableHead>
                         <StyledTableRow>
 
