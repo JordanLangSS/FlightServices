@@ -73,8 +73,9 @@ export const Home = () => {
                 onCancelSearch={() => cancelSearch()}
             />
 
-            <TableContainer sx={{ height: '165rem', overflowY: "scroll" }}>
-                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '85%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
+            <TableContainer sx={{ maxHeight: '90vh', overflow: "auto" }}>
+
+                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '85%', maxHeight: '5%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
                     <TableHead>
                         <StyledTableRow>
 
@@ -121,9 +122,12 @@ export const Home = () => {
                             );
                         })}
                     </TableBody>
+
                 </Table>
 
+
             </TableContainer>
+
         </>
 
 
