@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import { FormBox } from "../components/inputForms/FormBox";
 import Button from '@mui/material/Button';
 import { useLocation } from "react-router-dom";
 
@@ -58,6 +59,7 @@ export const UpdateFlight = () => {
     const numPassReg = register("numPass");
     const passLimitReg = register("passLimit");
 
+    // Function to update the flight in the DB, based on the user entry in the form
     const useSubmit = async () => {
         try {
             await axios.put('http://localhost:8085/flights',
@@ -67,7 +69,8 @@ export const UpdateFlight = () => {
                     departureAirport: departureAirportRef.current.value, arrivalAirport: arrivalAirportRef.current.value,
                     currentNumOfPassengers: numPassengersRef.current.value, passengerLimit: passengerLimitRef.current.value
                 });
-            navigate('../', { replace: true });
+
+            navigate('../', { replace: true }); //navigate the user back to the homePage onSubmit
         } catch (err) {
             console.log('Something went wrong');
             console.error(err);
@@ -77,194 +80,189 @@ export const UpdateFlight = () => {
     return (
 
         <Box sx={{ height: '165rem' }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+            <FormBox>
+                <Box
+                    sx={{
+                        '& > :not(style)': {
+                            borderRadius: 10,
+                            paddingLeft: '5rem',
+                            paddingRight: '5rem',
+                            paddingBottom: '2rem',
+                        },
+                    }}
+                >
 
-                    '& > :not(style)': {
-                        borderRadius: 10,
+                    <Paper elevation={24} square={true}>
+                        <Center>
+                            <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
+                                <Center><h1>Update Flight</h1></Center>
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="flightNumber"
+                                        name="flightNum"
+                                        label="Flight Number"
+                                        defaultValue={flightData.flight?.flightNumber === undefined ? '' : flightData.flight?.flightNumber}
+                                        variant="outlined"
+                                        color="primary"
+                                        error={errors.flightNum?.message}
+                                        helperText={errors.flightNum?.message}
+                                        {...flightNumberReg}
+                                        inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
 
-                        paddingLeft: '5rem',
-                        paddingRight: '5rem',
-                        paddingBottom: '2rem',
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="date"
+                                        label="Departure Date"
+                                        defaultValue={flightData.flight?.departureDate === undefined ? '' : flightData.flight?.departureDate}
+                                        type="date"
+                                        name="depDate"
+                                        error={errors.depDate?.message}
+                                        helperText={errors.depDate?.message}
 
-                    },
-                }}
-            >
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        {...depDateReg}
+                                        inputRef={(e) => { depDateReg.ref(e); departureDateRef.current = e; }}
+                                    />
+                                </div>
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="date"
+                                        label="Arrival Date"
+                                        defaultValue={flightData.flight?.arrivalDate === undefined ? '' : flightData.flight?.arrivalDate}
+                                        type="date"
+                                        name="arrDate"
+                                        error={errors.arrDate?.message}
+                                        helperText={errors.arrDate?.message}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        {...arrDateReg}
+                                        inputRef={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }}
+                                    />
+                                </div>
 
-                <Paper elevation={24} square={true}>
-                    <Center>
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="departureTime"
+                                        name="depTime"
+                                        label="Departure Time"
+                                        defaultValue={flightData.flight?.departureTime === undefined ? '' : flightData.flight?.departureTime}
+                                        type="time"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        error={errors.depTime?.message}
+                                        helperText={errors.depTime?.message}
+                                        {...depTimeReg}
+                                        inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
 
-                        <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
-                            <Center><h1>Update Flight</h1></Center>
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="flightNumber"
-                                    name="flightNum"
-                                    label="Flight Number"
-                                    defaultValue={flightData.flight?.flightNumber === undefined ? '' : flightData.flight?.flightNumber}
-                                    variant="outlined"
-                                    color="primary"
-                                    error={errors.flightNum?.message}
-                                    helperText={errors.flightNum?.message}
-                                    {...flightNumberReg}
-                                    inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
-                                >
-                                </TextField>
-                            </div>
+                                    />
+                                </div>
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="arrivalTime"
+                                        name="arrTime"
+                                        label="Arrival Time"
+                                        defaultValue={flightData.flight?.arrivalTime === undefined ? '' : flightData.flight?.arrivalTime}
+                                        type="time"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        error={errors.arrTime?.message}
+                                        helperText={errors.arrTime?.message}
+                                        {...arrTimeReg}
+                                        inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
 
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="date"
-                                    label="Departure Date"
-                                    defaultValue={flightData.flight?.departureDate === undefined ? '' : flightData.flight?.departureDate}
-                                    type="date"
-                                    name="depDate"
-                                    error={errors.depDate?.message}
-                                    helperText={errors.depDate?.message}
+                                    />
+                                </div>
 
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    {...depDateReg}
-                                    inputRef={(e) => { depDateReg.ref(e); departureDateRef.current = e; }}
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="date"
-                                    label="Arrival Date"
-                                    defaultValue={flightData.flight?.arrivalDate === undefined ? '' : flightData.flight?.arrivalDate}
-                                    type="date"
-                                    name="arrDate"
-                                    error={errors.arrDate?.message}
-                                    helperText={errors.arrDate?.message}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    {...arrDateReg}
-                                    inputRef={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }}
-                                />
-                            </div>
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="departureAirport"
+                                        name="depAirport"
+                                        label="Departure Airport"
+                                        defaultValue={flightData.flight?.departureAirport === undefined ? '' : flightData.flight?.departureAirport}
+                                        variant="outlined"
+                                        color="primary"
+                                        error={errors.depAirport?.message}
+                                        helperText={errors.depAirport?.message}
+                                        {...depAirportReg}
+                                        inputRef={(e) => { depAirportReg.ref(e); departureAirportRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
 
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="departureTime"
-                                    name="depTime"
-                                    label="Departure Time"
-                                    defaultValue={flightData.flight?.departureTime === undefined ? '' : flightData.flight?.departureTime}
-                                    type="time"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    error={errors.depTime?.message}
-                                    helperText={errors.depTime?.message}
-                                    {...depTimeReg}
-                                    inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="arrivalAirport"
+                                        name="arrAirport"
+                                        label="Arrival Airport"
+                                        defaultValue={flightData.flight?.arrivalAirport === undefined ? '' : flightData.flight?.arrivalAirport}
+                                        variant="outlined"
+                                        color="primary"
+                                        error={errors.arrAirport?.message}
+                                        helperText={errors.arrAirport?.message}
+                                        {...arrAirportReg}
+                                        inputRef={(e) => { arrAirportReg.ref(e); arrivalAirportRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
 
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="arrivalTime"
-                                    name="arrTime"
-                                    label="Arrival Time"
-                                    defaultValue={flightData.flight?.arrivalTime === undefined ? '' : flightData.flight?.arrivalTime}
-                                    type="time"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    error={errors.arrTime?.message}
-                                    helperText={errors.arrTime?.message}
-                                    {...arrTimeReg}
-                                    inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="numPassengers"
+                                        name="numPass"
+                                        label="Number of Passengers"
+                                        defaultValue={flightData.flight?.currentNumOfPassengers === undefined ? '' : flightData.flight?.currentNumOfPassengers}
+                                        variant="outlined"
+                                        color="primary"
+                                        error={errors.numPass?.message}
+                                        helperText={errors.numPass?.message}
+                                        {...numPassReg}
+                                        inputRef={(e) => { numPassReg.ref(e); numPassengersRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
 
-                                />
-                            </div>
-
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="departureAirport"
-                                    name="depAirport"
-                                    label="Departure Airport"
-                                    defaultValue={flightData.flight?.departureAirport === undefined ? '' : flightData.flight?.departureAirport}
-                                    variant="outlined"
-                                    color="primary"
-                                    error={errors.depAirport?.message}
-                                    helperText={errors.depAirport?.message}
-                                    {...depAirportReg}
-                                    inputRef={(e) => { depAirportReg.ref(e); departureAirportRef.current = e; }}
-                                >
-                                </TextField>
-                            </div>
-
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="arrivalAirport"
-                                    name="arrAirport"
-                                    label="Arrival Airport"
-                                    defaultValue={flightData.flight?.arrivalAirport === undefined ? '' : flightData.flight?.arrivalAirport}
-                                    variant="outlined"
-                                    color="primary"
-                                    error={errors.arrAirport?.message}
-                                    helperText={errors.arrAirport?.message}
-                                    {...arrAirportReg}
-                                    inputRef={(e) => { arrAirportReg.ref(e); arrivalAirportRef.current = e; }}
-                                >
-                                </TextField>
-                            </div>
-
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="numPassengers"
-                                    name="numPass"
-                                    label="Number of Passengers"
-                                    defaultValue={flightData.flight?.currentNumOfPassengers === undefined ? '' : flightData.flight?.currentNumOfPassengers}
-                                    variant="outlined"
-                                    color="primary"
-                                    error={errors.numPass?.message}
-                                    helperText={errors.numPass?.message}
-                                    {...numPassReg}
-                                    inputRef={(e) => { numPassReg.ref(e); numPassengersRef.current = e; }}
-                                >
-                                </TextField>
-                            </div>
-
-                            <div>
-                                <TextField
-                                    sx={{ width: 350, paddingBottom: 3 }}
-                                    id="passengerLimit"
-                                    name="passLimit"
-                                    label="Passenger Limit"
-                                    defaultValue={flightData.flight?.passengerLimit === undefined ? '' : flightData.flight?.passengerLimit}
-                                    variant="outlined"
-                                    color="primary"
-                                    error={errors.passLimit?.message}
-                                    helperText={errors.passLimit?.message}
-                                    {...passLimitReg}
-                                    inputRef={(e) => { passLimitReg.ref(e); passengerLimitRef.current = e; }}
-                                >
-                                </TextField>
-                            </div>
-                            <Center>
-                                <Button type="submit" variant="contained">
-                                    Update Flight
-                                </Button>
-                            </Center>
-                        </form>
-                    </Center>
-                </Paper>
-            </Box >
+                                <div>
+                                    <TextField
+                                        sx={{ width: 350, paddingBottom: 3 }}
+                                        id="passengerLimit"
+                                        name="passLimit"
+                                        label="Passenger Limit"
+                                        defaultValue={flightData.flight?.passengerLimit === undefined ? '' : flightData.flight?.passengerLimit}
+                                        variant="outlined"
+                                        color="primary"
+                                        error={errors.passLimit?.message}
+                                        helperText={errors.passLimit?.message}
+                                        {...passLimitReg}
+                                        inputRef={(e) => { passLimitReg.ref(e); passengerLimitRef.current = e; }}
+                                    >
+                                    </TextField>
+                                </div>
+                                <Center>
+                                    <Button type="submit" variant="contained">
+                                        Update Flight
+                                    </Button>
+                                </Center>
+                            </form>
+                        </Center>
+                    </Paper>
+                </Box >
+            </FormBox>
         </Box>
     );
 

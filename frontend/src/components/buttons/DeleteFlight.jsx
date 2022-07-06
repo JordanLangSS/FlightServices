@@ -11,7 +11,6 @@ export const DeleteFlight = ({ flight }) => {
 
     // Function to delete the specific flight number onClick
     const handleDelete = async (event) => {
-        //event.preventDefault();
         try {
             // use the flight number from the current clicked button to delete the flight
             await axios.delete('http://localhost:8085/flights/' + flight.flightNumber);

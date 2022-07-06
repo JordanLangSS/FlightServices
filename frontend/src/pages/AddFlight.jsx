@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { useRef } from "react";
 import axios from 'axios';
@@ -12,7 +11,13 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { FormBox } from '../components/inputForms/FormBox';
-import { TextInput } from '../components/inputForms/TextInput';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogActions from '@mui/material/DialogActions';
+import { useState, forwardRef } from 'react';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import Slide from '@mui/material/Slide';
 
 const schema = yup.object().shape({
     flightNum: yup.number().typeError('Please enter a valid Flight Number.').min(1, "The Flight Number must be greater than 0").max(999999, 'Flight Numbers can only be between 0 and 1,000,000').required(),
@@ -57,8 +62,66 @@ export const AddFlight = () => {
     const numPassReg = register("numPass");
     const passLimitReg = register("passLimit");
 
+    const [open, setOpen] = useState();
+    const Transition = forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
+
+    const SimpleDialog = () => {
+
+        const handleClickOpen = () => {
+            if (dupCheck === true) {
+                setOpen(true);
+            }
+        };
+
+        const handleClose = () => {
+            setDupCheck(false);
+            setOpen(false);
+        };
+        return (
+            <div>
+                <Dialog
+                    sx={{
+                        "& .MuiDialog-container": {
+                            "& .MuiPaper-root": {
+                                width: "100%",
+                                maxWidth: "20rem",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            },
+                        },
+                    }}
+                    open={handleClickOpen}
+                    onClose={handleClose}
+                    TransitionComponent={Transition}
+                    aria- labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        This flight already exists!
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Please try a different flight number
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} autoFocus>
+                            Close
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        );
+    }
+
+
+    let doSomething;
+    const [dupCheck, setDupCheck] = useState(false);
 
     const useSubmit = async () => {
+
         try {
             await axios.post('http://localhost:8085/flights',
                 {
@@ -67,198 +130,208 @@ export const AddFlight = () => {
                     departureAirport: departureAirportRef.current.value, arrivalAirport: arrivalAirportRef.current.value,
                     currentNumOfPassengers: numPassengersRef.current.value, passengerLimit: passengerLimitRef.current.value
                 });
+
             navigate('../', { replace: true });
         } catch (err) {
-            console.log('Something went wrong');
-            console.error(err);
+            if (err.message.indexOf("0") !== 1) {
+                setDupCheck(true);
+            }
         }
     }
 
+    if (dupCheck === true) {
+        doSomething = <SimpleDialog></SimpleDialog>
+        // doSomething = <Alert severity="error">This is an error alert — check it out!</Alert>
+    }
+
+
     return (
+        <>
+            {doSomething}
+            <Box sx={{ height: '165rem' }}>
 
-        <Box sx={{ height: '165rem' }}>
-            <FormBox>
-                <Box
-                    sx={{
-                        '& > :not(style)': {
-                            borderRadius: 10,
-                            paddingLeft: '5rem',
-                            paddingRight: '5rem',
-                            paddingBottom: '2rem',
-                        },
-                    }}
-                >
+                <FormBox>
+                    <Box
+                        sx={{
+                            '& > :not(style)': {
+                                borderRadius: 10,
+                                paddingLeft: '5rem',
+                                paddingRight: '5rem',
+                                paddingBottom: '2rem',
+                            },
+                        }}
+                    >
 
-                    <Paper elevation={24} >
-                        <Center>
+                        <Paper elevation={24} >
+                            <Center>
 
-                            <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
-                                <Center><h1>Create Flight</h1></Center>
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="flightNumber"
-                                        name="flightNum"
-                                        label="Flight Number"
-                                        variant="outlined"
-                                        color="primary"
-                                        error={errors.flightNum?.message}
-                                        helperText={errors.flightNum?.message}
+                                <form className="myForm" onSubmit={handleSubmit(useSubmit)}>
+                                    <Center><h1>Create Flight</h1></Center>
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="flightNumber"
+                                            name="flightNum"
+                                            label="Flight Number"
+                                            variant="outlined"
+                                            color="primary"
+                                            error={errors.flightNum?.message}
+                                            helperText={errors.flightNum?.message}
 
-                                        {...flightNumberReg}
-                                        inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
-                                    >
-                                    </TextField>
-                                </div>
+                                            {...flightNumberReg}
+                                            inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
+                                        >
+                                        </TextField>
+                                    </div>
 
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="date"
-                                        label="Departure Date"
-                                        type="date"
-                                        name="depDate"
-                                        error={errors.depDate?.message}
-                                        helperText={errors.depDate?.message}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        {...depDateReg}
-                                        inputRef={(e) => { depDateReg.ref(e); departureDateRef.current = e; }}
-                                    />
-                                </div>
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="date"
+                                            label="Departure Date"
+                                            type="date"
+                                            name="depDate"
+                                            error={errors.depDate?.message}
+                                            helperText={errors.depDate?.message}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            {...depDateReg}
+                                            inputRef={(e) => { depDateReg.ref(e); departureDateRef.current = e; }}
+                                        />
+                                    </div>
 
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="date"
-                                        label="Arrival Date"
-                                        type="date"
-                                        name="arrDate"
-                                        error={errors.arrDate?.message}
-                                        helperText={errors.arrDate?.message}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        {...arrDateReg}
-                                        inputRef={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }}
-                                    />
-                                </div>
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="date"
+                                            label="Arrival Date"
+                                            type="date"
+                                            name="arrDate"
+                                            error={errors.arrDate?.message}
+                                            helperText={errors.arrDate?.message}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            {...arrDateReg}
+                                            inputRef={(e) => { arrDateReg.ref(e); arrivalDateRef.current = e; }}
+                                        />
+                                    </div>
 
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="departureTime"
-                                        name="depTime"
-                                        label="Departure Time"
-                                        type="time"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        error={errors.depTime?.message}
-                                        helperText={errors.depTime?.message}
-                                        {...depTimeReg}
-                                        inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="departureTime"
+                                            name="depTime"
+                                            label="Departure Time"
+                                            type="time"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            error={errors.depTime?.message}
+                                            helperText={errors.depTime?.message}
+                                            {...depTimeReg}
+                                            inputRef={(e) => { depTimeReg.ref(e); departureTimeRef.current = e; }}
 
-                                    />
-                                </div>
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="arrivalTime"
-                                        name="arrTime"
-                                        label="Arrival Time"
-                                        type="time"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        error={errors.arrTime?.message}
-                                        helperText={errors.arrTime?.message}
-                                        {...arrTimeReg}
-                                        inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="arrivalTime"
+                                            name="arrTime"
+                                            label="Arrival Time"
+                                            type="time"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            error={errors.arrTime?.message}
+                                            helperText={errors.arrTime?.message}
+                                            {...arrTimeReg}
+                                            inputRef={(e) => { arrTimeReg.ref(e); arrivalTimeRef.current = e; }}
 
-                                    />
-                                </div>
+                                        />
+                                    </div>
 
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="departureAirport"
-                                        name="depAirport"
-                                        label="Departure Airport"
-                                        variant="outlined"
-                                        color="primary"
-                                        error={errors.depAirport?.message}
-                                        helperText={errors.depAirport?.message}
-                                        {...depAirportReg}
-                                        inputRef={(e) => { depAirportReg.ref(e); departureAirportRef.current = e; }}
-                                    >
-                                    </TextField>
-                                </div>
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="departureAirport"
+                                            name="depAirport"
+                                            label="Departure Airport"
+                                            variant="outlined"
+                                            color="primary"
+                                            error={errors.depAirport?.message}
+                                            helperText={errors.depAirport?.message}
+                                            {...depAirportReg}
+                                            inputRef={(e) => { depAirportReg.ref(e); departureAirportRef.current = e; }}
+                                        >
+                                        </TextField>
+                                    </div>
 
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="arrivalAirport"
-                                        name="arrAirport"
-                                        label="Arrival Airport"
-                                        variant="outlined"
-                                        color="primary"
-                                        error={errors.arrAirport?.message}
-                                        helperText={errors.arrAirport?.message}
-                                        {...arrAirportReg}
-                                        inputRef={(e) => { arrAirportReg.ref(e); arrivalAirportRef.current = e; }}
-                                    >
-                                    </TextField>
-                                </div>
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="arrivalAirport"
+                                            name="arrAirport"
+                                            label="Arrival Airport"
+                                            variant="outlined"
+                                            color="primary"
+                                            error={errors.arrAirport?.message}
+                                            helperText={errors.arrAirport?.message}
+                                            {...arrAirportReg}
+                                            inputRef={(e) => { arrAirportReg.ref(e); arrivalAirportRef.current = e; }}
+                                        >
+                                        </TextField>
+                                    </div>
 
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="numPassengers"
-                                        name="numPass"
-                                        label="Number of Passengers"
-                                        variant="outlined"
-                                        color="primary"
-                                        error={errors.numPass?.message}
-                                        helperText={errors.numPass?.message}
-                                        {...numPassReg}
-                                        inputRef={(e) => { numPassReg.ref(e); numPassengersRef.current = e; }}
-                                    >
-                                    </TextField>
-                                </div>
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="numPassengers"
+                                            name="numPass"
+                                            label="Number of Passengers"
+                                            variant="outlined"
+                                            color="primary"
+                                            error={errors.numPass?.message}
+                                            helperText={errors.numPass?.message}
+                                            {...numPassReg}
+                                            inputRef={(e) => { numPassReg.ref(e); numPassengersRef.current = e; }}
+                                        >
+                                        </TextField>
+                                    </div>
 
-                                <div>
-                                    <TextField
-                                        sx={{ width: 350, paddingBottom: 3 }}
-                                        id="passengerLimit"
-                                        name="passLimit"
-                                        label="Passenger Limit"
-                                        variant="outlined"
-                                        color="primary"
+                                    <div>
+                                        <TextField
+                                            sx={{ width: 350, paddingBottom: 3 }}
+                                            id="passengerLimit"
+                                            name="passLimit"
+                                            label="Passenger Limit"
+                                            variant="outlined"
+                                            color="primary"
 
-                                        error={errors.passLimit?.message}
-                                        helperText={errors.passLimit?.message}
-                                        {...passLimitReg}
-                                        inputRef={(e) => { passLimitReg.ref(e); passengerLimitRef.current = e; }}
-                                    >
-                                    </TextField>
-                                </div>
-                                <Center>
-                                    <Button type="submit" variant="contained">
-                                        Create Flight
-                                    </Button>
-                                </Center>
+                                            error={errors.passLimit?.message}
+                                            helperText={errors.passLimit?.message}
+                                            {...passLimitReg}
+                                            inputRef={(e) => { passLimitReg.ref(e); passengerLimitRef.current = e; }}
+                                        >
+                                        </TextField>
+                                    </div>
+                                    <Center>
+                                        <Button type="submit" variant="contained">
+                                            Create Flight
+                                        </Button>
+                                    </Center>
 
 
-                            </form>
+                                </form>
 
-                        </Center>
-                    </Paper>
-                </Box >
-            </FormBox>
-        </Box>
-
+                            </Center>
+                        </Paper>
+                    </Box >
+                </FormBox>
+            </Box>
+        </>
     );
 
 }

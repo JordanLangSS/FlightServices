@@ -5,13 +5,8 @@ import { DeleteFlight } from '../components/buttons';
 import { Table, tableCellClasses, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const Home = () => {
 
-    // const StyledSearchBar = styled(SearchBar)`
-    //     margin: 0 auto;
-    //     max-width: 25%;
-    //     max-height: 2rem;
-    // `;
+export const Home = () => {
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -47,39 +42,12 @@ export const Home = () => {
         // Possibly put a catch in here?
     }, []);
 
-
-    // Search
-    const [copyList, setCopyList] = useState(flights);
-    const [searched, setSearched] = useState("");
-
-    const requestSearch = (searchedVal) => {
-        const filteredRows = flights.filter((row) => {
-            return row.flights.flightNumber.includes(searchedVal);
-        });
-        setCopyList(filteredRows);
-    };
-
-    const cancelSearch = () => {
-        setSearched("");
-        requestSearch(searched);
-    };
-
-    //     <StyledSearchBar
-    //     value={searched}
-    //     onChange={(searchVal) => requestSearch(searchVal)}
-    //     onCancelSearch={() => cancelSearch()}
-    // />
-
     return (
         <>
-
-
             <TableContainer sx={{ maxHeight: '90vh', overflow: "auto" }}>
-
                 <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '85%', maxHeight: '5%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
                     <TableHead>
                         <StyledTableRow>
-
                             <StyledTableCell>Flight Number</StyledTableCell>
                             <StyledTableCell>Departure Date</StyledTableCell>
                             <StyledTableCell>Arrival Date</StyledTableCell>
@@ -91,7 +59,6 @@ export const Home = () => {
                             <StyledTableCell>Passenger Limit</StyledTableCell>
                             <StyledTableCell> Actions</StyledTableCell>
                         </StyledTableRow>
-
                     </TableHead>
                     <TableBody>
 
@@ -104,7 +71,6 @@ export const Home = () => {
                                     key={flight._id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-
                                     <StyledTableCell>{flight.flightNumber}</StyledTableCell>
                                     <StyledTableCell>{flight.departureDate}</StyledTableCell>
                                     <StyledTableCell>{flight.arrivalDate}</StyledTableCell>
@@ -116,10 +82,9 @@ export const Home = () => {
                                     <StyledTableCell>{flight.passengerLimit}</StyledTableCell>
                                     <StyledTableCell >
                                         <EditFlight flight={flight} />
-                                        <DeleteFlight flight={flight} />
+                                        <DeleteFlight flight={flight} handler={setFlights} />
                                     </StyledTableCell>
                                 </StyledTableRow>
-
                             );
                         })}
                     </TableBody>
