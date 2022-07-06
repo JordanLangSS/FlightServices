@@ -4,15 +4,14 @@ import { EditFlight } from '../components/buttons';
 import { DeleteFlight } from '../components/buttons';
 import { Table, tableCellClasses, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import SearchBar from "material-ui-search-bar";
 
 export const Home = () => {
 
-    const StyledSearchBar = styled(SearchBar)`
-        margin: 0 auto;
-        max-width: 25%;
-        max-height: 2rem;
-    `;
+    // const StyledSearchBar = styled(SearchBar)`
+    //     margin: 0 auto;
+    //     max-width: 25%;
+    //     max-height: 2rem;
+    // `;
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -45,7 +44,7 @@ export const Home = () => {
     useEffect(() => {
         axios.get('http://localhost:8085/flights')
             .then(res => setFlights(res.data));
-        // YOU COULD PUT A .CATCH ERROR IN HERE ********
+        // Possibly put a catch in here?
     }, []);
 
 
@@ -65,13 +64,15 @@ export const Home = () => {
         requestSearch(searched);
     };
 
+    //     <StyledSearchBar
+    //     value={searched}
+    //     onChange={(searchVal) => requestSearch(searchVal)}
+    //     onCancelSearch={() => cancelSearch()}
+    // />
+
     return (
         <>
-            <StyledSearchBar
-                value={searched}
-                onChange={(searchVal) => requestSearch(searchVal)}
-                onCancelSearch={() => cancelSearch()}
-            />
+
 
             <TableContainer sx={{ maxHeight: '90vh', overflow: "auto" }}>
 
