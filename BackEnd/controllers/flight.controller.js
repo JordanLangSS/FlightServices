@@ -2,9 +2,6 @@ const Flight = require('../models/Flight.model');
 
 const createFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currentNumOfPassengers, passengerLimit }) => {
     try {
-        // if (currentNumOfPassengers > passengerLimit) {
-        //     throw { message: 'The current numbers of passengers is greater than the passenger limit' };
-        // }
         const flight = new Flight({
             flightNumber,
             departureDate,
@@ -69,8 +66,6 @@ const deleteFlight = async flightNumber => {
         throw { status: 400, message: err };
     }
 }
-
-
 
 const findFlightById = async id => {
     try {

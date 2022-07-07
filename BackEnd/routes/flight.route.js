@@ -47,8 +47,4 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-
 module.exports = router;
-
-// possible have an airport router???
-// list out the different airports and what flights they have

@@ -21,7 +21,6 @@ app.all('*', (req, res) => {
     res.status(404).send('We dont\'t have the resource you\'re looking for.');
 });
 
-
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('Successfully connected to MongoDB');

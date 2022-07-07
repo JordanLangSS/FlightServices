@@ -51,21 +51,5 @@ const flightSchema = new Schema({
 
 });
 
-
-
 const Flight = mongoose.model('Flight', flightSchema, 'Flights');
 module.exports = Flight; // require ('Flight.model.js') will return this class
-
-/**
- * {
-"flightNumber": 2645,
-"departureDate": "6/20/22",
-"arrivalDate": "6/20/22",
-"departureTime": "09:21am",
-"arrivalTime": "10:31am",
-"departureAirport": "BWI",
-"arrivalAirport": "MYR",
-"currentNumOfPassengers": 2,
-"passengerLimit": 30
-}
- */
