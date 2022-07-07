@@ -39,7 +39,6 @@ export const Home = () => {
     const flightInfo = () => {
         axios.get('http://localhost:8085/flights')
             .then(res => setFlights(res.data));
-        // Possibly put a catch in here?
     }
 
     useEffect(() => {
@@ -48,8 +47,8 @@ export const Home = () => {
 
     return (
         <>
-            <TableContainer sx={{ maxHeight: '90vh', overflow: "auto" }}>
-                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '85%', maxHeight: '5%', margin: 'auto', borderRadius: 10, borderColor: '#FFFFFF' }}>
+            <TableContainer sx={{ maxHeight: '75vh', overflow: "auto" }}>
+                <Table aria-label='simple table' stickyHeader sx={{ maxWidth: '85%', margin: 'auto' }}>
                     <TableHead>
                         <StyledTableRow>
                             <StyledTableCell>Flight Number</StyledTableCell>
@@ -92,25 +91,9 @@ export const Home = () => {
                             );
                         })}
                     </TableBody>
-
                 </Table>
-
-
             </TableContainer>
 
         </>
-
-
     );
 }
-
-
-
-
-// Props explanation is in video 30 @ 12:40
-// Styled-components is in video 33 @ 40:00
-// React-Router-Dom is in video 35 @58:00
-// Redux is in video 35 @ 19:00
-// Grids was on 6/15 in the afternoon
-
-//{/* Destructure out the flight data*/}

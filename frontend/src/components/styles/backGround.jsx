@@ -1,8 +1,11 @@
 import styled from 'styled-components';
-import img from '../../images/spaceBackground.jpg';
+import img from "../../images/spaceBackground3.jpg";
 
 export const Content = styled.div`
     background-image: url(${img});
-    width: 100%;
-    max-width: 100%;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100vw;
+        height: 100vh;
 `;

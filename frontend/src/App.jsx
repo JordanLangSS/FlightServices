@@ -5,7 +5,7 @@ import { Content } from "./components/styles/BackGround";
 
 const App = () => {
     return (
-        <Content>
+        <Content> {/*background image*/}.
 
             {/* Everything inside of here is going to be managed by react-router-dom
         to allow the site to toggle between pages */}
