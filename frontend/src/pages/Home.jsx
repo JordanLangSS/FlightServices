@@ -36,10 +36,14 @@ export const Home = () => {
 
     const [flights, setFlights] = useState([]);
 
-    useEffect(() => {
+    const flightInfo = () => {
         axios.get('http://localhost:8085/flights')
             .then(res => setFlights(res.data));
         // Possibly put a catch in here?
+    }
+
+    useEffect(() => {
+        flightInfo();
     }, []);
 
     return (
@@ -82,7 +86,7 @@ export const Home = () => {
                                     <StyledTableCell>{flight.passengerLimit}</StyledTableCell>
                                     <StyledTableCell >
                                         <EditFlight flight={flight} />
-                                        <DeleteFlight flight={flight} handler={setFlights} />
+                                        <DeleteFlight flight={flight} flightInfo={flightInfo} />
                                     </StyledTableCell>
                                 </StyledTableRow>
                             );

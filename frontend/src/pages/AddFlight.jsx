@@ -141,7 +141,6 @@ export const AddFlight = () => {
 
     if (dupCheck === true) {
         doSomething = <SimpleDialog></SimpleDialog>
-        // doSomething = <Alert severity="error">This is an error alert — check it out!</Alert>
     }
 
 
@@ -177,7 +176,6 @@ export const AddFlight = () => {
                                             color="primary"
                                             error={errors.flightNum?.message}
                                             helperText={errors.flightNum?.message}
-
                                             {...flightNumberReg}
                                             inputRef={(e) => { flightNumberReg.ref(e); flightNumberRef.current = e; }}
                                         >
@@ -235,6 +233,7 @@ export const AddFlight = () => {
 
                                         />
                                     </div>
+
                                     <div>
                                         <TextField
                                             sx={{ width: 350, paddingBottom: 3 }}
