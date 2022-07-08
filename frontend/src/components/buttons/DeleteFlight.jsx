@@ -8,7 +8,7 @@ export const DeleteFlight = ({ flight, flightInfo }) => {
     const handleDelete = async () => {
         try {
             // use the flight number from the current clicked button to delete the flight
-            await axios.delete('http://localhost:8085/flights/' + flight.flightNumber);
+            await axios.delete(`http://localhost:8085/flights/${flight.flightNumber}`);
 
             // use to refresh just the component when deleted instead of the entire page
             // destructure out to pass the get all method into it in Home.jsx
