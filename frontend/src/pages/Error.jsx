@@ -4,7 +4,7 @@ export const Error = () => {
     return (
         <>
             <Center>
-                <h1>The page you were looking for could not be found</h1>
+                <div style={{ color: 'red', fontSize: '7rem' }}>The page you were looking for could not be found</div>
             </Center>
 
         </>

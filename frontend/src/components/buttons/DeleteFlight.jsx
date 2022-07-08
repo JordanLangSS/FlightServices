@@ -1,12 +1,11 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@material-ui/core/IconButton';
-
 import axios from 'axios';
 
 export const DeleteFlight = ({ flight, flightInfo }) => {
 
     // Function to delete the specific flight number onClick
-    const handleDelete = async (event) => {
+    const handleDelete = async () => {
         try {
             // use the flight number from the current clicked button to delete the flight
             await axios.delete('http://localhost:8085/flights/' + flight.flightNumber);
