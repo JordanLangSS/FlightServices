@@ -8,6 +8,8 @@ import { styled } from '@mui/material/styles';
 
 export const Home = () => {
 
+    const [flights, setFlights] = useState([]);
+
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: theme.palette.common.black,
@@ -34,8 +36,9 @@ export const Home = () => {
         },
     }));
 
-    const [flights, setFlights] = useState([]);
 
+    //get all flights from the DB
+    // create a function so it can be destructured out and used to cause re-render with child components
     const flightInfo = () => {
         axios.get('http://localhost:8085/flights')
             .then(res => setFlights(res.data));

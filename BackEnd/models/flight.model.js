@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 // create a flight schema
 const flightSchema = new Schema({
     flightNumber: {
-        //Schema.Types.ObjectId,
         type: Number,
-        unique: true,
+        unique: [true, 'The flight number must be unique'],
         required: [true, 'Must provide a flight number'],
         min: [1, 'Flight number must be greater than 0']
     },

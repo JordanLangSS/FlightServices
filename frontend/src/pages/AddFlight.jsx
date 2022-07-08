@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { TextField, Paper, Box, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Slide } from '@mui/material';
+import { TextField, Paper, Box, Button } from '@mui/material';
 import { FormBox } from '../components/inputForms/FormBox';
-import { useState, forwardRef, useRef } from 'react';
+import { useState, useRef } from 'react';
+import { DialogBoxx } from '../features';
 
 
 const schema = yup.object().shape({
@@ -27,7 +28,6 @@ export const AddFlight = () => {
     let dialogDupFlightNum;
 
     const [dupCheck, setDupCheck] = useState(false); //duplicate flight number checker
-    const [open, setOpen] = useState(); //open or close the duplicate flight dialog
 
     // use to navigate back to homepage on submit
     const navigate = useNavigate();
@@ -58,69 +58,17 @@ export const AddFlight = () => {
     const numPassReg = register("numPass");
     const passLimitReg = register("passLimit");
 
-    //Transition for dialog box
-    const Transition = forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-    });
-
-    const SimpleDialog = () => {
-
-        const handleClickOpen = () => {
-            if (dupCheck === true) {
-                setOpen(true);
-            }
-        };
-
-        const handleClose = () => {
-            setDupCheck(false);
-            setOpen(false);
-        };
-        return (
-            <div>
-                <Dialog
-                    sx={{
-                        "& .MuiDialog-container": {
-                            "& .MuiPaper-root": {
-                                width: "100%",
-                                maxWidth: "20rem",
-                                justifyContent: "center",
-                                alignItems: "center"
-                            },
-                        },
-                    }}
-                    open={handleClickOpen}
-                    onClose={handleClose}
-                    TransitionComponent={Transition}
-                    aria- labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        This flight already exists!
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Please try a different flight number
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose} autoFocus>
-                            Close
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-        );
-    }
-
     // If the flight number is already in the DB, call the error dialog box to inform user
     if (dupCheck === true) {
-        dialogDupFlightNum = <SimpleDialog></SimpleDialog>
+        dialogDupFlightNum = <DialogBoxx setDupCheck={setDupCheck} dupCheck={dupCheck}></DialogBoxx>
     }
 
+    //function to pull the input refs from the users entry and add them to the DB
     const useSubmit = async () => {
         try {
             await axios.post('http://localhost:8085/flights',
                 {
+                    // Must use exact name to link with the DB
                     flightNumber: flightNumberRef.current.value, departureDate: departureDateRef.current.value,
                     arrivalDate: arrivalDateRef.current.value, departureTime: departureTimeRef.current.value, arrivalTime: arrivalTimeRef.current.value,
                     departureAirport: departureAirportRef.current.value, arrivalAirport: arrivalAirportRef.current.value,
