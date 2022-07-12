@@ -1,5 +1,3 @@
-# Test
-
 # Flight Service
 
 This application will be an airline service. This service will be from the perspective of management. You, as the manager, can see and change everything.
